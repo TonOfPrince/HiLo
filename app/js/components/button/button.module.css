@@ -1,0 +1,9 @@
+.button {
+	background-color: #F18F44;
+	cursor: pointer;
+}
+
+.disabled {
+	background-color: grey;
+	cursor: pointer;
+}
