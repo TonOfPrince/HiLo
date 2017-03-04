@@ -32401,7 +32401,7 @@ exports = module.exports = __webpack_require__(88)();
 
 
 // module
-exports.push([module.i, ".card-module__card___1aGQe {\n\theight: 314px;\n\twidth: 226px;\n}", "", {"version":3,"sources":["/./app/js/components/card/card.module.css"],"names":[],"mappings":"AAAA;CACC,cAAc;CACd,aAAa;CACb","file":"card.module.css","sourcesContent":[".card {\n\theight: 314px;\n\twidth: 226px;\n}"],"sourceRoot":"webpack://"}]);
+exports.push([module.i, ".card-module__card___1aGQe {\n\theight: 314px;\n\twidth: 226px;\n\tmin-height: 314px;\n\tmin-width: 226px;\n}\n", "", {"version":3,"sources":["/./app/js/components/card/card.module.css"],"names":[],"mappings":"AAAA;CACC,cAAc;CACd,aAAa;CACb,kBAAkB;CAClB,iBAAiB;CACjB","file":"card.module.css","sourcesContent":[".card {\n\theight: 314px;\n\twidth: 226px;\n\tmin-height: 314px;\n\tmin-width: 226px;\n}\n"],"sourceRoot":"webpack://"}]);
 
 // exports
 exports.locals = {
