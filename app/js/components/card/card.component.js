@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {observer} from "mobx-react";
 import styles from './card.module.css';
 
-export class Card extends Component {
+class Card extends Component {
 
     render() {
     	let {card} = this.props;
@@ -10,3 +11,5 @@ export class Card extends Component {
         </div>
     }
 }
+
+export const CardView = observer(Card);

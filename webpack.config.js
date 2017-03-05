@@ -5,7 +5,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        // publicPath: '/',
+        publicPath: '/',
     },
     devtool: 'source-map',
     module: {
@@ -14,37 +14,27 @@ module.exports = {
                 test: /\.js?$/,
                 use: [{
                     loader: 'babel-loader',
-                    options: {presets: ['react', 'es2015']},
+                    options: {
+                        presets: ['react', 'es2015']
+                    },
                 }]
 
             }, {
                 test: /\.module.css$/,
-                use: [{
-                    loader: 'style-loader',
-                }, {
-                    loader: 'css-loader',
-                    options: {
-                        modules: true,
-                        importLoaders: 2,
-                        sourceMap: true,
-                        localIdentName: '[name]__[local]___[hash:base64:5]',
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            importLoaders: 2,
+                            sourceMap: true,
+                            localIdentName: '[name]__[local]___[hash:base64:5]',
+                        }
                     }
-                }]
-            }, {
-                test: /^((?!\.module).)*css$/,
-                use: [{
-                    loader: 'style-loader',
-                }, {
-                    loader: 'css-loader',
-                    options: {
-                        sourceMap: true,
-                    }
-                }]
-            }, {
-                test: /\.(png|jpg|gif)$/,
-                use: [{
-                    loader: 'file-loader?name=images/[name].[ext]',
-                }]
+                ],
             }
         ],
     },

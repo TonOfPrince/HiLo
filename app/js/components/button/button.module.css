@@ -1,9 +1,19 @@
 .button {
-	background-color: #F18F44;
-	cursor: pointer;
+    background-color: #F18F44;
+    cursor: pointer;
+    display: inline-block;
+    background: #F18F44;
+    color: #fff;
+    padding: .5em 1.5em;
+    font-weight: 700;
+    border-radius: 2px;
+    border: 1px solid #F18F44;
+    transition: all .1s ease-in;
 }
 
 .disabled {
-	background-color: grey;
-	cursor: pointer;
+    composes: button;
+    background-color: grey;
+    border: 1px solid grey;
+    cursor: default;
 }

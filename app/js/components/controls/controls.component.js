@@ -1,22 +1,25 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import _ from 'lodash';
-import {Button} from '../button/button.component';
+import {observer} from "mobx-react";
+import {ButtonView} from '../button/button.component';
+import styles from './controls.module.css';
 
-export class Controls extends Component {
+class Controls extends Component {
 
     render() {
         let {game} = this.props;
-        let passIsDisabled = !game.canPass();
+        let cantPass = !game.canPass;
+        let gameisOver = game.isOver;
         return <div>
-            {/* high */}
-            <Button onClick = {() => game.checkHi()} text = "HI"/>
-            {/* lo*/}
-            <Button onClick = {() => game.checkLo()} text = "LO"/>
-            {/* pass*/}
-            <Button onClick = {() => game.pass()} text = "Pass" isDisabled = {passIsDisabled}/>
-            {/* reset*/}
-            <Button onClick = {() => game.resetGame()} text = "Reset"/>
+            <div className = {styles.group}>
+                <ButtonView onClick = {() => game.checkHi()} text = "HI" isDisabled = {gameisOver}/>
+                <ButtonView onClick = {() => game.checkLo()} text = "LO" isDisabled = {gameisOver}/>
+            </div>
+            <div className = {styles.group}>
+                <ButtonView onClick = {() => game.pass()} text = "Pass" isDisabled = {gameisOver || cantPass}/>
+                <ButtonView onClick = {() => game.resetGame()} text = "Reset"/>
+            </div>
         </div>;
     }
 }
+
+export const ControlsView = observer(Controls);

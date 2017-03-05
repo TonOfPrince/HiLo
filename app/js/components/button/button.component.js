@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {observer} from "mobx-react";
 import styles from './button.module.css';
 
-export class Button extends Component {
+class Button extends Component {
 
     render() {
     	let {text, isDisabled} = this.props;
@@ -15,3 +16,5 @@ export class Button extends Component {
 Button.defaultProps = {
 	isDisabled: false,
 };
+
+export const ButtonView = observer(Button);

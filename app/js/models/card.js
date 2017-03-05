@@ -1,3 +1,5 @@
+import {action, extendObservable} from 'mobx';
+
 const cardMapping = {
     2: 2,
     3: 3,
@@ -15,20 +17,18 @@ const cardMapping = {
 };
 
 export class Card {
-    constructor({code, image, images, suit, value}) {
-        this.code = code;
-        this.image = image;
-        this.images = images;
-        this.suit = suit;
-        this.value = value;
-    }
 
-    isGreaterThan(otherCard) {
-        return cardMapping[this.value] > cardMapping[otherCard.value]
-    }
-
-    isLessThan(otherCard) {
-        return cardMapping[this.value] < cardMapping[otherCard.value]
+    constructor({value, image}) {
+        extendObservable(this, {
+            value,
+            image,
+            isGreaterThan: action('is card greater than another card', (otherCard) => {
+                return cardMapping[this.value] > cardMapping[otherCard.value];
+            }),
+            isLessThan: action('is card less than another card', (otherCard) => {
+                return cardMapping[this.value] < cardMapping[otherCard.value];
+            }),
+        })
     }
 
 };
