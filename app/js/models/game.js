@@ -36,7 +36,7 @@ class GameStore {
                     .then(({cards, remaining}) => {
                         let newCard = new Card(cards[0]);
                         let isNewCardGreater = newCard.isGreaterThan(this.topCard);
-                        this.topCard = newCard
+                        this.topCard = newCard;
                         if (!isNewCardGreater) {
                             this.activePlayer.addPoints(this.pointsAvailable);
                         }

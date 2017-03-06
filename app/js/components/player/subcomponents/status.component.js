@@ -4,8 +4,8 @@ import {observer} from 'mobx-react';
 class Status extends Component {
 
     render() {
-    	let {player, game} = this.props;
-    	let playerIsActive = player.isActive(game.activePlayer);
+        let {player, game} = this.props;
+        let playerIsActive = player.isActive(game.activePlayer);
         let gameIsOver = game.isOver;
 
         if (gameIsOver) {

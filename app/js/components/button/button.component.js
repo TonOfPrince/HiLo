@@ -5,8 +5,8 @@ import styles from './button.module.css';
 class Button extends Component {
 
     render() {
-    	let {text, isDisabled} = this.props;
-    	let className = isDisabled ? styles.disabled : styles.button;
+        let {text, isDisabled} = this.props;
+        let className = isDisabled ? styles.disabled : styles.button;
         return <div onClick = {this.props.onClick} className = {className}>
             {text}
         </div>;
@@ -14,7 +14,7 @@ class Button extends Component {
 }
 
 Button.defaultProps = {
-	isDisabled: false,
+    isDisabled: false,
 };
 
 export const ButtonView = observer(Button);
