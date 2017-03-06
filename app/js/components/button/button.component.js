@@ -5,9 +5,10 @@ import styles from './button.module.css';
 class Button extends Component {
 
     render() {
-        let {text, isDisabled} = this.props;
+        let {text, isDisabled, onClick} = this.props;
         let className = isDisabled ? styles.disabled : styles.button;
-        return <div onClick = {this.props.onClick} className = {className}>
+        onClick = isDisabled ? _.noop : onClick;
+        return <div onClick = {onClick} className = {className}>
             {text}
         </div>;
     }

@@ -23,7 +23,7 @@ class Page extends Component {
                 game = {this.game}
             />
             <div>
-                <CardView card = {topCard} />
+                <CardView card = {topCard} game = {this.game} />
                 <StatsView game = {this.game} />
                 <ControlsView game = {this.game} />
             </div>

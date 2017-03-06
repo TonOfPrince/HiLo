@@ -3,4 +3,7 @@
     width: 226px;
     min-height: 314px;
     min-width: 226px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -14,9 +14,11 @@ class GameStore {
             activePlayer: playerOne,
             topCard: {},
             pointsAvailable: 0,
+            isLoading: false,
             deck: new Deck({remaining: 52}),
             correctConsecutiveGuesses: 0,
             startNewGame: action('starts a new game', () => {
+                this.isLoading = true;
                 return this.fetchDeck()
                     .then(() => this.drawCard())
                     .then(({cards, remaining}) => {
@@ -24,6 +26,7 @@ class GameStore {
                         this.activePlayer = this.playerOne;
                         this.deck.updateRemaining(remaining);
                         this.topCard = new Card(cards[0]);
+                        this.isLoading = false;
                     });
             }),
             fetchDeck: action('fetch a new deck', () => {
@@ -32,6 +35,7 @@ class GameStore {
                     .then(({deck_id, remaining}) => this.deck = new Deck({deck_id, remaining}));
             }),
             checkHi: action('check if new card is higher than previous card', () => {
+                this.isLoading = true;
                 this.drawCard()
                     .then(({cards, remaining}) => {
                         let newCard = new Card(cards[0]);
@@ -43,9 +47,11 @@ class GameStore {
                         this.correctConsecutiveGuesses = isNewCardGreater ? this.correctConsecutiveGuesses + 1 : 0;
                         this.pointsAvailable = isNewCardGreater ? this.pointsAvailable + 1 : 1;
                         this.deck.updateRemaining(remaining);
+                        this.isLoading = false;
                     });
             }),
             checkLo: action('check if new card is lower than previous card', () => {
+                this.isLoading = true;
                 this.drawCard()
                     .then(({cards, remaining}) => {
                         let newCard = new Card(cards[0]);
@@ -57,6 +63,7 @@ class GameStore {
                         this.correctConsecutiveGuesses = isNewCardLess ? this.correctConsecutiveGuesses + 1 : 0;
                         this.pointsAvailable = isNewCardLess ? this.pointsAvailable + 1 : 1;
                         this.deck.updateRemaining(remaining);
+                        this.isLoading = false;
                     });
             }),
             pass: action('pass play to other player', () => {

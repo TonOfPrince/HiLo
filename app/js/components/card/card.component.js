@@ -5,9 +5,13 @@ import styles from './card.module.css';
 class Card extends Component {
 
     render() {
-        let {card} = this.props;
+        let {card, game} = this.props;
         return <div className = {styles.card}>
-            <img src = {card.image} />
+            {
+                game.isLoading ?
+                    <span>Loading...</span> :
+                    <img src = {card.image} />
+            }
         </div>
     }
 }

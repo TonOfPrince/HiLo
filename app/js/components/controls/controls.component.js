@@ -9,13 +9,14 @@ class Controls extends Component {
         let {game} = this.props;
         let cantPass = !game.canPass;
         let gameisOver = game.isOver;
+        let isLoading = game.isLoading;
         return <div>
             <div className = {styles.group}>
-                <ButtonView onClick = {() => game.checkHi()} text = "HI" isDisabled = {gameisOver}/>
-                <ButtonView onClick = {() => game.checkLo()} text = "LO" isDisabled = {gameisOver}/>
+                <ButtonView onClick = {() => game.checkHi()} text = "HI" isDisabled = {gameisOver || isLoading}/>
+                <ButtonView onClick = {() => game.checkLo()} text = "LO" isDisabled = {gameisOver || isLoading}/>
             </div>
             <div className = {styles.group}>
-                <ButtonView onClick = {() => game.pass()} text = "Pass" isDisabled = {gameisOver || cantPass}/>
+                <ButtonView onClick = {() => game.pass()} text = "Pass" isDisabled = {gameisOver || cantPass || isLoading}/>
                 <ButtonView onClick = {() => game.resetGame()} text = "Reset"/>
             </div>
         </div>;
