@@ -39,15 +39,7 @@ class GameStore {
                 this.drawCard()
                     .then(({cards, remaining}) => {
                         let newCard = new Card(cards[0]);
-                        let isNewCardGreater = newCard.isGreaterThan(this.topCard);
-                        this.topCard = newCard;
-                        if (!isNewCardGreater) {
-                            this.activePlayer.addPoints(this.pointsAvailable);
-                        }
-                        this.correctConsecutiveGuesses = isNewCardGreater ? this.correctConsecutiveGuesses + 1 : 0;
-                        this.pointsAvailable = isNewCardGreater ? this.pointsAvailable + 1 : 1;
-                        this.deck.updateRemaining(remaining);
-                        this.isLoading = false;
+                        this.compareCards(newCard, 'greater', remaining);
                     });
             }),
             checkLo: action('check if new card is lower than previous card', () => {
@@ -55,15 +47,7 @@ class GameStore {
                 this.drawCard()
                     .then(({cards, remaining}) => {
                         let newCard = new Card(cards[0]);
-                        let isNewCardLess = newCard.isLessThan(this.topCard);
-                        this.topCard = newCard;
-                        if (!isNewCardLess) {
-                            this.activePlayer.addPoints(this.pointsAvailable);
-                        }
-                        this.correctConsecutiveGuesses = isNewCardLess ? this.correctConsecutiveGuesses + 1 : 0;
-                        this.pointsAvailable = isNewCardLess ? this.pointsAvailable + 1 : 1;
-                        this.deck.updateRemaining(remaining);
-                        this.isLoading = false;
+                        this.compareCards(newCard, 'less', remaining);
                     });
             }),
             pass: action('pass play to other player', () => {
@@ -88,9 +72,9 @@ class GameStore {
     getPlayerStatus(player) {
         let winnerID;
         if (this.playerOne.points > this.playerTwo.points) {
-            winnerID = 1;
-        } else if (this.playerOne.points < this.playerTwo.points) {
             winnerID = 2;
+        } else if (this.playerOne.points < this.playerTwo.points) {
+            winnerID = 1;
         } else {
             return 'tie';
         }
@@ -99,6 +83,27 @@ class GameStore {
         } else {
             return 'lose';
         }
+    }
+
+    compareCards(newCard, comparator, remaining) {
+        let succeedsComparison;
+        switch(comparator) {
+        case 'greater':
+            succeedsComparison = newCard.isGreaterThan(this.topCard);
+            break;
+        case 'less':
+            succeedsComparison = newCard.isLessThan(this.topCard);
+            break;
+        default:
+        }
+        this.topCard = newCard;
+        if (!succeedsComparison) {
+            this.activePlayer.addPoints(this.pointsAvailable);
+        }
+        this.correctConsecutiveGuesses = succeedsComparison ? this.correctConsecutiveGuesses + 1 : 0;
+        this.pointsAvailable = succeedsComparison ? this.pointsAvailable + 1 : 1;
+        this.deck.updateRemaining(remaining);
+        this.isLoading = false;
     }
 
     resetGame() {
