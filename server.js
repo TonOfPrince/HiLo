@@ -1,14 +1,24 @@
-var express = require("express");
+const express = require('express');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // port
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // ip
-var ip = "127.0.0.1";
+const ip = "127.0.0.1";
 
 app.use(express.static(__dirname));
+
+require('./server/routes')(app);
+app.get('*', (req, res) => res.status(200).send({
+  	message: 'Welcome to the beginning of nothingness.',
+}));
 
 app.get('/',function(req,res){
   res.sendfile("index.html");

@@ -5,10 +5,11 @@ import styles from './stats.module.css';
 class Stats extends Component {
 
     render() {
-        let {deck, pointsAvailable} = this.props.game;
+        let {deck, pointsAvailable, numberOfGuessesLeft} = this.props.game;
         return <div className = {styles.stats}>
             <div> Cards remaining: {deck.remaining}</div>
             <div> Points on the line: {pointsAvailable}</div>
+            <div> You need {numberOfGuessesLeft} to pass </div>
         </div>;
     }
 }

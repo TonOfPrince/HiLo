@@ -12,6 +12,12 @@ class Player extends Component {
         return <div className = {styles.player}>
             <div>Player {player.playerID}</div>
             <div>Points: {player.points}</div>
+            <input onChange={e => {
+            	console.log(e.target.value);
+            	player.updateName(e.target.value);
+            }}/>
+
+            <div>Name: {player.name}</div>
             <StatusView player = {player} game = {game} />
         </div>;
     }

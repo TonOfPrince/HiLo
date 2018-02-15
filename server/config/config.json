@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "brettleibo",
+    "password": null,
+    "database": "ihal-dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "brettleibo",
+    "password": null,
+    "database": "ihal-test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "brettleibo",
+    "password": null,
+    "database": "ihal-prod",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

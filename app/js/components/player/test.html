@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    </head>
+    <body>
+        <p>When I type into field a, I want the contents reflected in field b:</p>
+        <form>
+          Field a:
+          <input type="text" value="something" class="speaker" />
+          <br />
+
+          Field b:
+          <input type="text" value="something" class="listener" />
+        </form>
+        <script>
+        $(function(){
+          $('.speaker').keyup(function(e){
+            console.log('here');
+            console.log($('.listener'));
+            console.log(e);
+            var value = e.target.value;
+            // $('.listener').html(value);
+            $('.listener')[0].value = value;
+          });
+        });
+        </script>
+    </body>
+</html>

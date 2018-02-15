@@ -9,33 +9,45 @@ module.exports = {
     },
     devtool: 'source-map',
     module: {
-        rules: [
-            {
-                test: /\.js?$/,
-                use: [{
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['react', 'es2015']
-                    },
-                }]
-
-            }, {
-                test: /\.module.css$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            importLoaders: 2,
-                            sourceMap: true,
-                            localIdentName: '[name]__[local]___[hash:base64:5]',
-                        }
-                    }
-                ],
+        rules: [{
+            test: /\.js?$/,
+            exclude: /(node_modules)/,
+            loader: 'babel-loader',
+            options: {
+                presets: ['react', 'es2015']
             }
-        ],
+        },  {
+            test: /\.module.css$/,
+            use: [
+                {
+                    loader: 'style-loader',
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
+                        importLoaders: 2,
+                        sourceMap: true,
+                        localIdentName: '[name]__[local]___[hash:base64:5]',
+                    }
+                }
+            ],
+        }, {
+            test: /\.(png|jpg|gif)$/,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    name: 'images/[name].[ext]',
+                }
+            }]
+        }, {
+            test: /\.(eot|otf|svg|ttf|woff|woff2)$/,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[name].[ext]',
+                }
+            }]
+        }],
     },
 };

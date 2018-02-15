@@ -60,6 +60,10 @@ class GameStore {
             }),
             canPass: computed(() => this.correctConsecutiveGuesses >= 3),
             isOver: computed(() => this.deck.remaining === 0),
+            numberOfGuessesLeft: computed(() => {
+                console.log(_.max([0, 3 - this.correctConsecutiveGuesses]));
+                return _.max([0, 3 - this.correctConsecutiveGuesses]); 
+            }),
 
         });
     }
