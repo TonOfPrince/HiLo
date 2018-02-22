@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 
     List.associate = models => {
         List.hasMany(models.Link, {
-            foreignKey: 'id',
+            foreignKey: 'listId',
             as: 'links',
         })
     }

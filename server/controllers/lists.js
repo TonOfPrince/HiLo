@@ -1,81 +1,51 @@
 const List = require('../models').List;
 const Link = require('../models').Link;
+const pool = require('../db');
 
 module.exports = {
     create(req, res) {
-        return List
-            .create({
-                title: req.body.title,
-            })
+        pool.query(`INSERT INTO LISTS (title) VALUES ($1);`, [req.body.title])
             .then(list => res.status(201).send(list))
             .catch(error => res.status(400).send(error));
     },
     list(req, res) {
-        return List
-            .findAll({
-                include: [{
-                    model: Link,
-                    as: 'links',
-                }],
-            })
-            .then(lists => res.status(200).send(lists))
+        pool.query(`SELECT * FROM LISTS;`)
+            .then(lists => res.status(201).send(lists.rows))
             .catch(error => res.status(400).send(error));
     },
     retrieve(req, res) {
-        return List
-            .findById(req.params.id, {
-                include: [{
-                    model: Link,
-                    as: 'links',
-                }],
-            })
+        pool.query(`SELECT * FROM lists WHERE listid = ($1);`, [req.params.listId])
             .then(list => {
-                if (!list) {
-                    return res.status(404).send({
-                        message: 'List Not Found',
-                    });
-                }
-                return res.status(200).send(list);
+                let ret = list.rows;
+                pool.query(`SELECT * FROM links WHERE listid = ($1);`, [req.params.listId])
+                    .then(links => {
+                        ret[0].links = links.rows;
+                        res.status(201).send(ret);
+                    })
+                    .catch(error => res.status(400).send(error));
             })
             .catch(error => res.status(400).send(error));
     },
     update(req, res) {
-        return List
-            .findById(req.params.id, {
-                include: [{
-                    model: Link,
-                    as: 'links',
-                }],
-            })
+        pool.query(`UPDATE lists SET title = ($1) WHERE listid = ($2);`, [req.body.title, req.params.listId])
             .then(list => {
-                if (!list) {
-                    return res.status(404).send({
-                        message: 'List Not Found',
-                    });
-                }
-                return list
-                    .update({
-                        title: req.body.title || list.title,
+                pool.query(`SELECT * FROM lists WHERE listid = ($1);`, [req.params.listId])
+                    .then(list => {
+                        let ret = list.rows;
+                        pool.query(`SELECT * FROM links WHERE listid = ($1);`, [req.params.listId])
+                            .then(links => {
+                                ret[0].links = links.rows;
+                                res.status(201).send(ret);
+                            })
+                            .catch(error => res.status(400).send(error));
                     })
-                    .then(() => res.status(200).send(list))  // Send back the updated list.
-                    .catch((error) => res.status(400).send(error));
-            })
-            .catch((error) => res.status(400).send(error));
-    },
-    destroy(req, res) {
-        return List
-            .findById(req.params.id)
-            .then(list => {
-                if (!list) {
-                    return res.status(400).send({
-                        message: 'List Not Found',
-                    });
-                }
-                return list
-                    .destroy()
-                    .then(() => res.status(204).send())
                     .catch(error => res.status(400).send(error));
             })
+            .catch(error => res.status(400).send(error));
+    },
+    destroy(req, res) {
+        pool.query(`DELETE FROM lists WHERE listid = ($1);`, [req.params.listId])
+            .then(list => res.status(201).send(list))
             .catch(error => res.status(400).send(error));
     },
 };
